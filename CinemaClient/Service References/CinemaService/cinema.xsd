@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://service/" targetNamespace="http://service/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Authentication" type="tns:Authentication" />
+  <xs:element name="AuthenticationException" type="tns:AuthenticationException" />
+  <xs:element name="CancelReservation" type="tns:CancelReservation" />
+  <xs:element name="CancelReservationResponse" type="tns:CancelReservationResponse" />
+  <xs:element name="CreateUser" type="tns:CreateUser" />
+  <xs:element name="CreateUserResponse" type="tns:CreateUserResponse" />
+  <xs:element name="Film" type="tns:Film" />
+  <xs:element name="GetFilm" type="tns:GetFilm" />
+  <xs:element name="GetFilmResponse" type="tns:GetFilmResponse" />
+  <xs:element name="GetReservation" type="tns:GetReservation" />
+  <xs:element name="GetReservationResponse" type="tns:GetReservationResponse" />
+  <xs:element name="GetReservations" type="tns:GetReservations" />
+  <xs:element name="GetReservationsResponse" type="tns:GetReservationsResponse" />
+  <xs:element name="GetShowing" type="tns:GetShowing" />
+  <xs:element name="GetShowingResponse" type="tns:GetShowingResponse" />
+  <xs:element name="GetShowings" type="tns:GetShowings" />
+  <xs:element name="GetShowingsResponse" type="tns:GetShowingsResponse" />
+  <xs:element name="GetTakenSeats" type="tns:GetTakenSeats" />
+  <xs:element name="GetTakenSeatsResponse" type="tns:GetTakenSeatsResponse" />
+  <xs:element name="InvalidIdException" type="tns:InvalidIdException" />
+  <xs:element name="Login" type="tns:Login" />
+  <xs:element name="LoginResponse" type="tns:LoginResponse" />
+  <xs:element name="MakeReservation" type="tns:MakeReservation" />
+  <xs:element name="MakeReservationResponse" type="tns:MakeReservationResponse" />
+  <xs:element name="NoSuchUserException" type="tns:NoSuchUserException" />
+  <xs:element name="Person" type="tns:Person" />
+  <xs:element name="Reservation" type="tns:Reservation" />
+  <xs:element name="Role" type="tns:Role" />
+  <xs:element name="Seat" type="tns:Seat" />
+  <xs:element name="SeatAlreadyTakenException" type="tns:SeatAlreadyTakenException" />
+  <xs:element name="Showing" type="tns:Showing" />
+  <xs:element name="UpdateReservation" type="tns:UpdateReservation" />
+  <xs:element name="UpdateReservationResponse" type="tns:UpdateReservationResponse" />
+  <xs:element name="UserAlreadyExistsException" type="tns:UserAlreadyExistsException" />
+  <xs:element name="WrongPasswordException" type="tns:WrongPasswordException" />
+  <xs:complexType name="Login">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Authentication">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Password" type="xs:string" />
+      <xs:element minOccurs="0" name="Username" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LoginResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="NoSuchUserException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WrongPasswordException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetReservation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+      <xs:element name="reservationID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetReservationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:Reservation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Reservation">
+    <xs:sequence>
+      <xs:element name="ID" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Seats" type="tns:Seat" />
+      <xs:element name="ShowingID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Seat">
+    <xs:sequence>
+      <xs:element name="Column" type="xs:int" />
+      <xs:element name="Row" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InvalidIdException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AuthenticationException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CreateUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CreateUserResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="UserAlreadyExistsException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetShowing">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetShowingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:Showing" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Showing">
+    <xs:sequence>
+      <xs:element name="SeatsColumnNumber" type="xs:int" />
+      <xs:element name="DateEpoch" type="xs:long" />
+      <xs:element name="FilmID" type="xs:int" />
+      <xs:element minOccurs="0" name="FilmTitle" type="xs:string" />
+      <xs:element name="ID" type="xs:int" />
+      <xs:element name="SeatsRowNumber" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetReservations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetReservationsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:Reservation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CancelReservation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+      <xs:element name="reservationID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CancelReservationResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="GetFilm">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetFilmResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:Film" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Film">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cover" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="Description" type="xs:string" />
+      <xs:element minOccurs="0" name="Director" type="tns:Person" />
+      <xs:element name="ID" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Roles" type="tns:Role" />
+      <xs:element minOccurs="0" name="Title" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Person">
+    <xs:sequence>
+      <xs:element name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" type="xs:string" />
+      <xs:element minOccurs="0" name="Surname" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Role">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Actor" type="tns:Person" />
+      <xs:element minOccurs="0" name="Name" type="xs:string" />
+      <xs:element minOccurs="0" name="Surname" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetShowings">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="GetShowingsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:Showing" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdateReservation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+      <xs:element name="reservationID" type="xs:int" />
+      <xs:element minOccurs="0" name="reservation" type="tns:Reservation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdateReservationResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="SeatAlreadyTakenException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetTakenSeats">
+    <xs:sequence>
+      <xs:element name="showingID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetTakenSeatsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:Seat" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MakeReservation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+      <xs:element minOccurs="0" name="reservation" type="tns:Reservation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MakeReservationResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

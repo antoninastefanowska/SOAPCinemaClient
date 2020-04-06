@@ -1,0 +1,38 @@
+﻿<Window x:Class="CinemaClient.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CinemaClient"
+        mc:Ignorable="d"
+        Style="{StaticResource WindowStyle}"
+        Title="Zaloguj" SizeToContent="Height" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Border Style="{StaticResource MainBorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource TextBlockLightStyle}" Grid.ColumnSpan="2">Nazwa użytkownika:</TextBlock>
+                <TextBox Style="{StaticResource TextBoxStyle}" Name="UsernameTextbox" Grid.Row="1" Grid.ColumnSpan="2" />
+                <TextBlock Style="{StaticResource TextBlockLightStyle}" Grid.Row="2" Grid.ColumnSpan="2">Hasło:</TextBlock>
+                <PasswordBox Style="{StaticResource PasswordBoxStyle}" Name="PasswordTextbox"  Grid.Row="3" Grid.ColumnSpan="2" />
+                <Button Style="{StaticResource ButtonLightStyle}" Name="LoginButton"  Grid.Row="4" Click="LoginButton_Click">Zaloguj</Button>
+                <Button Style="{StaticResource ButtonLightStyle}" Name="CreateAccountButton" Grid.Row="4" Grid.Column="1" Click="CreateAccountButton_Click">Utwórz konto</Button>
+            </Grid>
+        </Border>
+        <ProgressBar Style="{StaticResource ProgressBarStyle}" Name="ProgressBar" Grid.Row="1" Visibility="Collapsed" />
+    </Grid>
+</Window>

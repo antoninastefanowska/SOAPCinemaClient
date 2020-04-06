@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="CinemaClient.ReservationSummaryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CinemaClient"
+             mc:Ignorable="d" Loaded="Control_Loaded">
+    <UserControl.Resources>
+        <local:EpochToDateStringConverter x:Key="EpochToDateStringConverter" />
+        <local:EpochToTimeStringConverter x:Key="EpochToTimeStringConverter" />
+        <local:IncrementConverter x:Key="IncrementConverter" />
+    </UserControl.Resources>
+    <Grid Name="ContainerGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid Name="MainGrid" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.ColumnSpan="2" Style="{StaticResource TextBlockBigStyle}">Podsumowanie</TextBlock>
+            <TextBlock Grid.Row="1" HorizontalAlignment="Right" Style="{StaticResource TextBlockBoldStyle}">Dzień:</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlockLightStyle}" Text="{Binding Showing.DateEpoch, Converter={StaticResource EpochToDateStringConverter}}" />
+            <TextBlock Grid.Row="2" HorizontalAlignment="Right" Style="{StaticResource TextBlockBoldStyle}">Godzina:</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockLightStyle}" Text="{Binding Showing.DateEpoch, Converter={StaticResource EpochToTimeStringConverter}}" />
+            <TextBlock Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource TextBlockBoldStyle}">Film:</TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlockLightStyle}" Text="{Binding Showing.FilmTitle}" />
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource TextBlockBoldStyle}">Zarezerwowane miejsca:</TextBlock>
+            <ListView Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource ListViewStyle}" ItemsSource="{Binding Reservation.Seats}" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="2" HorizontalAlignment="Right" Style="{StaticResource TextBlockBoldStyle}">Rząd:</TextBlock>
+                            <TextBlock Grid.Column="1" Margin="2" Style="{StaticResource TextBlockLightStyle}" Text="{Binding Row, Converter={StaticResource IncrementConverter}}" />
+                            <TextBlock Grid.Row="1" Margin="2" HorizontalAlignment="Right" Style="{StaticResource TextBlockBoldStyle}">Numer:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="2" Style="{StaticResource TextBlockLightStyle}" Text="{Binding Column, Converter={StaticResource IncrementConverter}}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonLightStyle}" Click="GenerateDocumentFileButton_Click">Pobierz potwierdzenie</Button>
+    </Grid>
+</UserControl>

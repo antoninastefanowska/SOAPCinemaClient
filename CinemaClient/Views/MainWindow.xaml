@@ -1,0 +1,105 @@
+﻿<Window x:Class="CinemaClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CinemaClient"
+        mc:Ignorable="d"
+        Style="{StaticResource WindowStyle}"
+        Title="Kino" Height="500" Width="600" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Border Style="{StaticResource MainBorderStyle}">
+            <TabControl Style="{StaticResource TabControlStyle}" SelectionChanged="Tab_SelectionChanged">
+                <TabItem Name="ShowingsTab">
+                    <TabItem.Header>Pokazy filmowe</TabItem.Header>
+                    <DataGrid Name="ShowingsDataGrid" Grid.Row="1" Style="{StaticResource DataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Dzień" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource TextBlockDarkStyle}" Text="{Binding DateEpoch, Converter={StaticResource EpochToDateStringConverter}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Godzina" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource TextBlockDarkStyle}" Text="{Binding DateEpoch, Converter={StaticResource EpochToTimeStringConverter}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Tytuł" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource TextBlockDarkStyle}" FontWeight="Bold" Text="{Binding FilmTitle}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource ButtonDarkStyle}" Click="ShowShowingButton_Click">Pokaż</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ReservationsTab">
+                    <TabItem.Header>Rezerwacje</TabItem.Header>
+                    <DataGrid Name="ReservationsDataGrid" Grid.Row="1" Style="{StaticResource DataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Dzień" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource TextBlockDarkStyle}" Text="{Binding Showing.DateEpoch, Converter={StaticResource EpochToDateStringConverter}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Godzina" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource TextBlockDarkStyle}" Text="{Binding Showing.DateEpoch, Converter={StaticResource EpochToTimeStringConverter}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Tytuł" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource TextBlockDarkStyle}" FontWeight="Bold" Text="{Binding Showing.FilmTitle}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource ButtonDarkStyle}" Click="ShowReservationButton_Click">Pokaż</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource ButtonDarkStyle}" Click="UpdateReservation_Click">Aktualizuj</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource ButtonDarkStyle}" Click="CancelReservation_Click">Anuluj</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+        </Border>
+        <ProgressBar Name="ProgressBar" Grid.Row="1" Visibility="Collapsed" Style="{StaticResource ProgressBarStyle}" />
+    </Grid>
+</Window>
