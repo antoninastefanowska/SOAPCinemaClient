@@ -87,7 +87,6 @@ namespace CinemaClient
             StartLoading();
             GetShowingsResponse response = await Service.GetShowingsAsync();
             Showing[] data = response.@return;
-            data = data.OrderBy(showing => showing.DateEpoch).ToArray();
             ShowingsDataGrid.ItemsSource = data;
             StopLoading();
         }

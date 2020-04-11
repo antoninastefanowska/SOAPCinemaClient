@@ -17,7 +17,7 @@ namespace CinemaClient.CinemaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class NoSuchUserException : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class InvalidIdException : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string messageField;
         
@@ -49,33 +49,33 @@ namespace CinemaClient.CinemaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class Authentication : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Seat : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string passwordField;
+        private int columnField;
         
-        private string usernameField;
+        private int rowField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public string Password {
+        public int Column {
             get {
-                return this.passwordField;
+                return this.columnField;
             }
             set {
-                this.passwordField = value;
-                this.RaisePropertyChanged("Password");
+                this.columnField = value;
+                this.RaisePropertyChanged("Column");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public string Username {
+        public int Row {
             get {
-                return this.usernameField;
+                return this.rowField;
             }
             set {
-                this.usernameField = value;
-                this.RaisePropertyChanged("Username");
+                this.rowField = value;
+                this.RaisePropertyChanged("Row");
             }
         }
         
@@ -95,39 +95,7 @@ namespace CinemaClient.CinemaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class WrongPasswordException : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string messageField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public string message {
-            get {
-                return this.messageField;
-            }
-            set {
-                this.messageField = value;
-                this.RaisePropertyChanged("message");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class InvalidIdException : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AuthenticationException : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string messageField;
         
@@ -191,7 +159,39 @@ namespace CinemaClient.CinemaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class AuthenticationException : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class NoSuchUserException : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string messageField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+                this.RaisePropertyChanged("message");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
+    public partial class WrongPasswordException : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string messageField;
         
@@ -253,15 +253,36 @@ namespace CinemaClient.CinemaService {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://service/", ConfigurationName="CinemaService.ICinemaService")]
     public interface ICinemaService {
         
-        // CODEGEN: Parameter 'authentication' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/LoginRequest", ReplyAction="http://service/ICinemaService/LoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.NoSuchUserException), Action="http://service/ICinemaService/Login/Fault/NoSuchUserException", Name="NoSuchUserException")]
-        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.WrongPasswordException), Action="http://service/ICinemaService/Login/Fault/WrongPasswordException", Name="WrongPasswordException")]
+        // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetTakenSeatsRequest", ReplyAction="http://service/ICinemaService/GetTakenSeatsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.InvalidIdException), Action="http://service/ICinemaService/GetTakenSeats/Fault/InvalidIdException", Name="InvalidIdException")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        CinemaClient.CinemaService.LoginResponse Login(CinemaClient.CinemaService.LoginRequest request);
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        CinemaClient.CinemaService.GetTakenSeatsResponse GetTakenSeats(CinemaClient.CinemaService.GetTakenSeatsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/LoginRequest", ReplyAction="http://service/ICinemaService/LoginResponse")]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.LoginResponse> LoginAsync(CinemaClient.CinemaService.LoginRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetTakenSeatsRequest", ReplyAction="http://service/ICinemaService/GetTakenSeatsResponse")]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetTakenSeatsResponse> GetTakenSeatsAsync(CinemaClient.CinemaService.GetTakenSeatsRequest request);
+        
+        // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetShowingRequest", ReplyAction="http://service/ICinemaService/GetShowingResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.InvalidIdException), Action="http://service/ICinemaService/GetShowing/Fault/InvalidIdException", Name="InvalidIdException")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        CinemaClient.CinemaService.GetShowingResponse GetShowing(CinemaClient.CinemaService.GetShowingRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetShowingRequest", ReplyAction="http://service/ICinemaService/GetShowingResponse")]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetShowingResponse> GetShowingAsync(CinemaClient.CinemaService.GetShowingRequest request);
+        
+        // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetReservationsRequest", ReplyAction="http://service/ICinemaService/GetReservationsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.InvalidIdException), Action="http://service/ICinemaService/GetReservations/Fault/InvalidIdException", Name="InvalidIdException")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.AuthenticationException), Action="http://service/ICinemaService/GetReservations/Fault/AuthenticationException", Name="AuthenticationException")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        CinemaClient.CinemaService.GetReservationsResponse GetReservations(CinemaClient.CinemaService.GetReservationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetReservationsRequest", ReplyAction="http://service/ICinemaService/GetReservationsResponse")]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationsResponse> GetReservationsAsync(CinemaClient.CinemaService.GetReservationsRequest request);
         
         // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetFilmRequest", ReplyAction="http://service/ICinemaService/GetFilmResponse")]
@@ -285,6 +306,16 @@ namespace CinemaClient.CinemaService {
         [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/MakeReservationRequest", ReplyAction="http://service/ICinemaService/MakeReservationResponse")]
         System.Threading.Tasks.Task<CinemaClient.CinemaService.MakeReservationResponse> MakeReservationAsync(CinemaClient.CinemaService.MakeReservationRequest request);
         
+        // CODEGEN: Parameter 'authentication' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/LoginRequest", ReplyAction="http://service/ICinemaService/LoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.NoSuchUserException), Action="http://service/ICinemaService/Login/Fault/NoSuchUserException", Name="NoSuchUserException")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.WrongPasswordException), Action="http://service/ICinemaService/Login/Fault/WrongPasswordException", Name="WrongPasswordException")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        CinemaClient.CinemaService.LoginResponse Login(CinemaClient.CinemaService.LoginRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/LoginRequest", ReplyAction="http://service/ICinemaService/LoginResponse")]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.LoginResponse> LoginAsync(CinemaClient.CinemaService.LoginRequest request);
+        
         // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetShowingsRequest", ReplyAction="http://service/ICinemaService/GetShowingsResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -293,26 +324,6 @@ namespace CinemaClient.CinemaService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetShowingsRequest", ReplyAction="http://service/ICinemaService/GetShowingsResponse")]
         System.Threading.Tasks.Task<CinemaClient.CinemaService.GetShowingsResponse> GetShowingsAsync(CinemaClient.CinemaService.GetShowingsRequest request);
-        
-        // CODEGEN: Parameter 'authentication' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/CreateUserRequest", ReplyAction="http://service/ICinemaService/CreateUserResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.UserAlreadyExistsException), Action="http://service/ICinemaService/CreateUser/Fault/UserAlreadyExistsException", Name="UserAlreadyExistsException")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        CinemaClient.CinemaService.CreateUserResponse CreateUser(CinemaClient.CinemaService.CreateUserRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/CreateUserRequest", ReplyAction="http://service/ICinemaService/CreateUserResponse")]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.CreateUserResponse> CreateUserAsync(CinemaClient.CinemaService.CreateUserRequest request);
-        
-        // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetReservationsRequest", ReplyAction="http://service/ICinemaService/GetReservationsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.InvalidIdException), Action="http://service/ICinemaService/GetReservations/Fault/InvalidIdException", Name="InvalidIdException")]
-        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.AuthenticationException), Action="http://service/ICinemaService/GetReservations/Fault/AuthenticationException", Name="AuthenticationException")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        CinemaClient.CinemaService.GetReservationsResponse GetReservations(CinemaClient.CinemaService.GetReservationsRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetReservationsRequest", ReplyAction="http://service/ICinemaService/GetReservationsResponse")]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationsResponse> GetReservationsAsync(CinemaClient.CinemaService.GetReservationsRequest request);
         
         // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetReservationRequest", ReplyAction="http://service/ICinemaService/GetReservationResponse")]
@@ -325,25 +336,14 @@ namespace CinemaClient.CinemaService {
         [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetReservationRequest", ReplyAction="http://service/ICinemaService/GetReservationResponse")]
         System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationResponse> GetReservationAsync(CinemaClient.CinemaService.GetReservationRequest request);
         
-        // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetTakenSeatsRequest", ReplyAction="http://service/ICinemaService/GetTakenSeatsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.InvalidIdException), Action="http://service/ICinemaService/GetTakenSeats/Fault/InvalidIdException", Name="InvalidIdException")]
+        // CODEGEN: Parameter 'authentication' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/CreateUserRequest", ReplyAction="http://service/ICinemaService/CreateUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.UserAlreadyExistsException), Action="http://service/ICinemaService/CreateUser/Fault/UserAlreadyExistsException", Name="UserAlreadyExistsException")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        CinemaClient.CinemaService.GetTakenSeatsResponse GetTakenSeats(CinemaClient.CinemaService.GetTakenSeatsRequest request);
+        CinemaClient.CinemaService.CreateUserResponse CreateUser(CinemaClient.CinemaService.CreateUserRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetTakenSeatsRequest", ReplyAction="http://service/ICinemaService/GetTakenSeatsResponse")]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetTakenSeatsResponse> GetTakenSeatsAsync(CinemaClient.CinemaService.GetTakenSeatsRequest request);
-        
-        // CODEGEN: Parameter 'return' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetShowingRequest", ReplyAction="http://service/ICinemaService/GetShowingResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(CinemaClient.CinemaService.InvalidIdException), Action="http://service/ICinemaService/GetShowing/Fault/InvalidIdException", Name="InvalidIdException")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        CinemaClient.CinemaService.GetShowingResponse GetShowing(CinemaClient.CinemaService.GetShowingRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/GetShowingRequest", ReplyAction="http://service/ICinemaService/GetShowingResponse")]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetShowingResponse> GetShowingAsync(CinemaClient.CinemaService.GetShowingRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/CreateUserRequest", ReplyAction="http://service/ICinemaService/CreateUserResponse")]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.CreateUserResponse> CreateUserAsync(CinemaClient.CinemaService.CreateUserRequest request);
         
         // CODEGEN: Parameter 'authentication' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://service/ICinemaService/UpdateReservationRequest", ReplyAction="http://service/ICinemaService/UpdateReservationResponse")]
@@ -370,17 +370,311 @@ namespace CinemaClient.CinemaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="Login", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class LoginRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetTakenSeats", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class GetTakenSeatsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int showingID;
+        
+        public GetTakenSeatsRequest() {
+        }
+        
+        public GetTakenSeatsRequest(int showingID) {
+            this.showingID = showingID;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetTakenSeatsResponse", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class GetTakenSeatsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public CinemaClient.CinemaService.Seat[] @return;
+        
+        public GetTakenSeatsResponse() {
+        }
+        
+        public GetTakenSeatsResponse(CinemaClient.CinemaService.Seat[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
+    public partial class Showing : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int seatsColumnNumberField;
+        
+        private long dateEpochField;
+        
+        private int filmIDField;
+        
+        private string filmTitleField;
+        
+        private int idField;
+        
+        private int seatsRowNumberField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public int SeatsColumnNumber {
+            get {
+                return this.seatsColumnNumberField;
+            }
+            set {
+                this.seatsColumnNumberField = value;
+                this.RaisePropertyChanged("SeatsColumnNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public long DateEpoch {
+            get {
+                return this.dateEpochField;
+            }
+            set {
+                this.dateEpochField = value;
+                this.RaisePropertyChanged("DateEpoch");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public int FilmID {
+            get {
+                return this.filmIDField;
+            }
+            set {
+                this.filmIDField = value;
+                this.RaisePropertyChanged("FilmID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string FilmTitle {
+            get {
+                return this.filmTitleField;
+            }
+            set {
+                this.filmTitleField = value;
+                this.RaisePropertyChanged("FilmTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public int ID {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+                this.RaisePropertyChanged("ID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public int SeatsRowNumber {
+            get {
+                return this.seatsRowNumberField;
+            }
+            set {
+                this.seatsRowNumberField = value;
+                this.RaisePropertyChanged("SeatsRowNumber");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetShowing", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class GetShowingRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int id;
+        
+        public GetShowingRequest() {
+        }
+        
+        public GetShowingRequest(int id) {
+            this.id = id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetShowingResponse", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class GetShowingResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public CinemaClient.CinemaService.Showing @return;
+        
+        public GetShowingResponse() {
+        }
+        
+        public GetShowingResponse(CinemaClient.CinemaService.Showing @return) {
+            this.@return = @return;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
+    public partial class Authentication : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string passwordField;
+        
+        private string usernameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string Password {
+            get {
+                return this.passwordField;
+            }
+            set {
+                this.passwordField = value;
+                this.RaisePropertyChanged("Password");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string Username {
+            get {
+                return this.usernameField;
+            }
+            set {
+                this.usernameField = value;
+                this.RaisePropertyChanged("Username");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
+    public partial class Reservation : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string codeField;
+        
+        private int idField;
+        
+        private Seat[] seatsField;
+        
+        private int showingIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string Code {
+            get {
+                return this.codeField;
+            }
+            set {
+                this.codeField = value;
+                this.RaisePropertyChanged("Code");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public int ID {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+                this.RaisePropertyChanged("ID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Seats", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public Seat[] Seats {
+            get {
+                return this.seatsField;
+            }
+            set {
+                this.seatsField = value;
+                this.RaisePropertyChanged("Seats");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public int ShowingID {
+            get {
+                return this.showingIDField;
+            }
+            set {
+                this.showingIDField = value;
+                this.RaisePropertyChanged("ShowingID");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetReservations", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class GetReservationsRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public CinemaClient.CinemaService.Authentication authentication;
         
-        public LoginRequest() {
+        public GetReservationsRequest() {
         }
         
-        public LoginRequest(CinemaClient.CinemaService.Authentication authentication) {
+        public GetReservationsRequest(CinemaClient.CinemaService.Authentication authentication) {
             this.authentication = authentication;
         }
     }
@@ -388,10 +682,18 @@ namespace CinemaClient.CinemaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="LoginResponse", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class LoginResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetReservationsResponse", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class GetReservationsResponse {
         
-        public LoginResponse() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public CinemaClient.CinemaService.Reservation[] @return;
+        
+        public GetReservationsResponse() {
+        }
+        
+        public GetReservationsResponse(CinemaClient.CinemaService.Reservation[] @return) {
+            this.@return = @return;
         }
     }
     
@@ -653,112 +955,6 @@ namespace CinemaClient.CinemaService {
         }
     }
     
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class Reservation : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int idField;
-        
-        private Seat[] seatsField;
-        
-        private int showingIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int ID {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-                this.RaisePropertyChanged("ID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Seats", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public Seat[] Seats {
-            get {
-                return this.seatsField;
-            }
-            set {
-                this.seatsField = value;
-                this.RaisePropertyChanged("Seats");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
-        public int ShowingID {
-            get {
-                return this.showingIDField;
-            }
-            set {
-                this.showingIDField = value;
-                this.RaisePropertyChanged("ShowingID");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class Seat : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int columnField;
-        
-        private int rowField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int Column {
-            get {
-                return this.columnField;
-            }
-            set {
-                this.columnField = value;
-                this.RaisePropertyChanged("Column");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public int Row {
-            get {
-                return this.rowField;
-            }
-            set {
-                this.rowField = value;
-                this.RaisePropertyChanged("Row");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -790,115 +986,41 @@ namespace CinemaClient.CinemaService {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int @return;
+        public string @return;
         
         public MakeReservationResponse() {
         }
         
-        public MakeReservationResponse(int @return) {
+        public MakeReservationResponse(string @return) {
             this.@return = @return;
         }
     }
     
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service/")]
-    public partial class Showing : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Login", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class LoginRequest {
         
-        private int seatsColumnNumberField;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public CinemaClient.CinemaService.Authentication authentication;
         
-        private long dateEpochField;
-        
-        private int filmIDField;
-        
-        private string filmTitleField;
-        
-        private int idField;
-        
-        private int seatsRowNumberField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public int SeatsColumnNumber {
-            get {
-                return this.seatsColumnNumberField;
-            }
-            set {
-                this.seatsColumnNumberField = value;
-                this.RaisePropertyChanged("SeatsColumnNumber");
-            }
+        public LoginRequest() {
         }
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public long DateEpoch {
-            get {
-                return this.dateEpochField;
-            }
-            set {
-                this.dateEpochField = value;
-                this.RaisePropertyChanged("DateEpoch");
-            }
+        public LoginRequest(CinemaClient.CinemaService.Authentication authentication) {
+            this.authentication = authentication;
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LoginResponse", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class LoginResponse {
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
-        public int FilmID {
-            get {
-                return this.filmIDField;
-            }
-            set {
-                this.filmIDField = value;
-                this.RaisePropertyChanged("FilmID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
-        public string FilmTitle {
-            get {
-                return this.filmTitleField;
-            }
-            set {
-                this.filmTitleField = value;
-                this.RaisePropertyChanged("FilmTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
-        public int ID {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-                this.RaisePropertyChanged("ID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
-        public int SeatsRowNumber {
-            get {
-                return this.seatsRowNumberField;
-            }
-            set {
-                this.seatsRowNumberField = value;
-                this.RaisePropertyChanged("SeatsRowNumber");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
+        public LoginResponse() {
         }
     }
     
@@ -926,70 +1048,6 @@ namespace CinemaClient.CinemaService {
         }
         
         public GetShowingsResponse(CinemaClient.CinemaService.Showing[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateUser", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class CreateUserRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public CinemaClient.CinemaService.Authentication authentication;
-        
-        public CreateUserRequest() {
-        }
-        
-        public CreateUserRequest(CinemaClient.CinemaService.Authentication authentication) {
-            this.authentication = authentication;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateUserResponse", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class CreateUserResponse {
-        
-        public CreateUserResponse() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetReservations", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class GetReservationsRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public CinemaClient.CinemaService.Authentication authentication;
-        
-        public GetReservationsRequest() {
-        }
-        
-        public GetReservationsRequest(CinemaClient.CinemaService.Authentication authentication) {
-            this.authentication = authentication;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetReservationsResponse", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class GetReservationsResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public CinemaClient.CinemaService.Reservation[] @return;
-        
-        public GetReservationsResponse() {
-        }
-        
-        public GetReservationsResponse(CinemaClient.CinemaService.Reservation[] @return) {
             this.@return = @return;
         }
     }
@@ -1038,72 +1096,28 @@ namespace CinemaClient.CinemaService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetTakenSeats", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class GetTakenSeatsRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateUser", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class CreateUserRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int showingID;
+        public CinemaClient.CinemaService.Authentication authentication;
         
-        public GetTakenSeatsRequest() {
+        public CreateUserRequest() {
         }
         
-        public GetTakenSeatsRequest(int showingID) {
-            this.showingID = showingID;
+        public CreateUserRequest(CinemaClient.CinemaService.Authentication authentication) {
+            this.authentication = authentication;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetTakenSeatsResponse", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class GetTakenSeatsResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateUserResponse", WrapperNamespace="http://service/", IsWrapped=true)]
+    public partial class CreateUserResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public CinemaClient.CinemaService.Seat[] @return;
-        
-        public GetTakenSeatsResponse() {
-        }
-        
-        public GetTakenSeatsResponse(CinemaClient.CinemaService.Seat[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetShowing", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class GetShowingRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
-        
-        public GetShowingRequest() {
-        }
-        
-        public GetShowingRequest(int id) {
-            this.id = id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetShowingResponse", WrapperNamespace="http://service/", IsWrapped=true)]
-    public partial class GetShowingResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public CinemaClient.CinemaService.Showing @return;
-        
-        public GetShowingResponse() {
-        }
-        
-        public GetShowingResponse(CinemaClient.CinemaService.Showing @return) {
-            this.@return = @return;
+        public CreateUserResponse() {
         }
     }
     
@@ -1206,167 +1220,6 @@ namespace CinemaClient.CinemaService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CinemaClient.CinemaService.LoginResponse CinemaClient.CinemaService.ICinemaService.Login(CinemaClient.CinemaService.LoginRequest request) {
-            return base.Channel.Login(request);
-        }
-        
-        public void Login(CinemaClient.CinemaService.Authentication authentication) {
-            CinemaClient.CinemaService.LoginRequest inValue = new CinemaClient.CinemaService.LoginRequest();
-            inValue.authentication = authentication;
-            CinemaClient.CinemaService.LoginResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).Login(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.LoginResponse> CinemaClient.CinemaService.ICinemaService.LoginAsync(CinemaClient.CinemaService.LoginRequest request) {
-            return base.Channel.LoginAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<CinemaClient.CinemaService.LoginResponse> LoginAsync(CinemaClient.CinemaService.Authentication authentication) {
-            CinemaClient.CinemaService.LoginRequest inValue = new CinemaClient.CinemaService.LoginRequest();
-            inValue.authentication = authentication;
-            return ((CinemaClient.CinemaService.ICinemaService)(this)).LoginAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CinemaClient.CinemaService.GetFilmResponse CinemaClient.CinemaService.ICinemaService.GetFilm(CinemaClient.CinemaService.GetFilmRequest request) {
-            return base.Channel.GetFilm(request);
-        }
-        
-        public CinemaClient.CinemaService.Film GetFilm(int id) {
-            CinemaClient.CinemaService.GetFilmRequest inValue = new CinemaClient.CinemaService.GetFilmRequest();
-            inValue.id = id;
-            CinemaClient.CinemaService.GetFilmResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetFilm(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetFilmResponse> CinemaClient.CinemaService.ICinemaService.GetFilmAsync(CinemaClient.CinemaService.GetFilmRequest request) {
-            return base.Channel.GetFilmAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetFilmResponse> GetFilmAsync(int id) {
-            CinemaClient.CinemaService.GetFilmRequest inValue = new CinemaClient.CinemaService.GetFilmRequest();
-            inValue.id = id;
-            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetFilmAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CinemaClient.CinemaService.MakeReservationResponse CinemaClient.CinemaService.ICinemaService.MakeReservation(CinemaClient.CinemaService.MakeReservationRequest request) {
-            return base.Channel.MakeReservation(request);
-        }
-        
-        public int MakeReservation(CinemaClient.CinemaService.Authentication authentication, CinemaClient.CinemaService.Reservation reservation) {
-            CinemaClient.CinemaService.MakeReservationRequest inValue = new CinemaClient.CinemaService.MakeReservationRequest();
-            inValue.authentication = authentication;
-            inValue.reservation = reservation;
-            CinemaClient.CinemaService.MakeReservationResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).MakeReservation(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.MakeReservationResponse> CinemaClient.CinemaService.ICinemaService.MakeReservationAsync(CinemaClient.CinemaService.MakeReservationRequest request) {
-            return base.Channel.MakeReservationAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<CinemaClient.CinemaService.MakeReservationResponse> MakeReservationAsync(CinemaClient.CinemaService.Authentication authentication, CinemaClient.CinemaService.Reservation reservation) {
-            CinemaClient.CinemaService.MakeReservationRequest inValue = new CinemaClient.CinemaService.MakeReservationRequest();
-            inValue.authentication = authentication;
-            inValue.reservation = reservation;
-            return ((CinemaClient.CinemaService.ICinemaService)(this)).MakeReservationAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CinemaClient.CinemaService.GetShowingsResponse CinemaClient.CinemaService.ICinemaService.GetShowings(CinemaClient.CinemaService.GetShowingsRequest request) {
-            return base.Channel.GetShowings(request);
-        }
-        
-        public CinemaClient.CinemaService.Showing[] GetShowings() {
-            CinemaClient.CinemaService.GetShowingsRequest inValue = new CinemaClient.CinemaService.GetShowingsRequest();
-            CinemaClient.CinemaService.GetShowingsResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetShowings(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetShowingsResponse> CinemaClient.CinemaService.ICinemaService.GetShowingsAsync(CinemaClient.CinemaService.GetShowingsRequest request) {
-            return base.Channel.GetShowingsAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetShowingsResponse> GetShowingsAsync() {
-            CinemaClient.CinemaService.GetShowingsRequest inValue = new CinemaClient.CinemaService.GetShowingsRequest();
-            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetShowingsAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CinemaClient.CinemaService.CreateUserResponse CinemaClient.CinemaService.ICinemaService.CreateUser(CinemaClient.CinemaService.CreateUserRequest request) {
-            return base.Channel.CreateUser(request);
-        }
-        
-        public void CreateUser(CinemaClient.CinemaService.Authentication authentication) {
-            CinemaClient.CinemaService.CreateUserRequest inValue = new CinemaClient.CinemaService.CreateUserRequest();
-            inValue.authentication = authentication;
-            CinemaClient.CinemaService.CreateUserResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).CreateUser(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.CreateUserResponse> CinemaClient.CinemaService.ICinemaService.CreateUserAsync(CinemaClient.CinemaService.CreateUserRequest request) {
-            return base.Channel.CreateUserAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<CinemaClient.CinemaService.CreateUserResponse> CreateUserAsync(CinemaClient.CinemaService.Authentication authentication) {
-            CinemaClient.CinemaService.CreateUserRequest inValue = new CinemaClient.CinemaService.CreateUserRequest();
-            inValue.authentication = authentication;
-            return ((CinemaClient.CinemaService.ICinemaService)(this)).CreateUserAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CinemaClient.CinemaService.GetReservationsResponse CinemaClient.CinemaService.ICinemaService.GetReservations(CinemaClient.CinemaService.GetReservationsRequest request) {
-            return base.Channel.GetReservations(request);
-        }
-        
-        public CinemaClient.CinemaService.Reservation[] GetReservations(CinemaClient.CinemaService.Authentication authentication) {
-            CinemaClient.CinemaService.GetReservationsRequest inValue = new CinemaClient.CinemaService.GetReservationsRequest();
-            inValue.authentication = authentication;
-            CinemaClient.CinemaService.GetReservationsResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservations(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationsResponse> CinemaClient.CinemaService.ICinemaService.GetReservationsAsync(CinemaClient.CinemaService.GetReservationsRequest request) {
-            return base.Channel.GetReservationsAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationsResponse> GetReservationsAsync(CinemaClient.CinemaService.Authentication authentication) {
-            CinemaClient.CinemaService.GetReservationsRequest inValue = new CinemaClient.CinemaService.GetReservationsRequest();
-            inValue.authentication = authentication;
-            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservationsAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CinemaClient.CinemaService.GetReservationResponse CinemaClient.CinemaService.ICinemaService.GetReservation(CinemaClient.CinemaService.GetReservationRequest request) {
-            return base.Channel.GetReservation(request);
-        }
-        
-        public CinemaClient.CinemaService.Reservation GetReservation(CinemaClient.CinemaService.Authentication authentication, int reservationID) {
-            CinemaClient.CinemaService.GetReservationRequest inValue = new CinemaClient.CinemaService.GetReservationRequest();
-            inValue.authentication = authentication;
-            inValue.reservationID = reservationID;
-            CinemaClient.CinemaService.GetReservationResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservation(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationResponse> CinemaClient.CinemaService.ICinemaService.GetReservationAsync(CinemaClient.CinemaService.GetReservationRequest request) {
-            return base.Channel.GetReservationAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationResponse> GetReservationAsync(CinemaClient.CinemaService.Authentication authentication, int reservationID) {
-            CinemaClient.CinemaService.GetReservationRequest inValue = new CinemaClient.CinemaService.GetReservationRequest();
-            inValue.authentication = authentication;
-            inValue.reservationID = reservationID;
-            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservationAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         CinemaClient.CinemaService.GetTakenSeatsResponse CinemaClient.CinemaService.ICinemaService.GetTakenSeats(CinemaClient.CinemaService.GetTakenSeatsRequest request) {
             return base.Channel.GetTakenSeats(request);
         }
@@ -1410,6 +1263,167 @@ namespace CinemaClient.CinemaService {
             CinemaClient.CinemaService.GetShowingRequest inValue = new CinemaClient.CinemaService.GetShowingRequest();
             inValue.id = id;
             return ((CinemaClient.CinemaService.ICinemaService)(this)).GetShowingAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CinemaClient.CinemaService.GetReservationsResponse CinemaClient.CinemaService.ICinemaService.GetReservations(CinemaClient.CinemaService.GetReservationsRequest request) {
+            return base.Channel.GetReservations(request);
+        }
+        
+        public CinemaClient.CinemaService.Reservation[] GetReservations(CinemaClient.CinemaService.Authentication authentication) {
+            CinemaClient.CinemaService.GetReservationsRequest inValue = new CinemaClient.CinemaService.GetReservationsRequest();
+            inValue.authentication = authentication;
+            CinemaClient.CinemaService.GetReservationsResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservations(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationsResponse> CinemaClient.CinemaService.ICinemaService.GetReservationsAsync(CinemaClient.CinemaService.GetReservationsRequest request) {
+            return base.Channel.GetReservationsAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationsResponse> GetReservationsAsync(CinemaClient.CinemaService.Authentication authentication) {
+            CinemaClient.CinemaService.GetReservationsRequest inValue = new CinemaClient.CinemaService.GetReservationsRequest();
+            inValue.authentication = authentication;
+            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservationsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CinemaClient.CinemaService.GetFilmResponse CinemaClient.CinemaService.ICinemaService.GetFilm(CinemaClient.CinemaService.GetFilmRequest request) {
+            return base.Channel.GetFilm(request);
+        }
+        
+        public CinemaClient.CinemaService.Film GetFilm(int id) {
+            CinemaClient.CinemaService.GetFilmRequest inValue = new CinemaClient.CinemaService.GetFilmRequest();
+            inValue.id = id;
+            CinemaClient.CinemaService.GetFilmResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetFilm(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetFilmResponse> CinemaClient.CinemaService.ICinemaService.GetFilmAsync(CinemaClient.CinemaService.GetFilmRequest request) {
+            return base.Channel.GetFilmAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetFilmResponse> GetFilmAsync(int id) {
+            CinemaClient.CinemaService.GetFilmRequest inValue = new CinemaClient.CinemaService.GetFilmRequest();
+            inValue.id = id;
+            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetFilmAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CinemaClient.CinemaService.MakeReservationResponse CinemaClient.CinemaService.ICinemaService.MakeReservation(CinemaClient.CinemaService.MakeReservationRequest request) {
+            return base.Channel.MakeReservation(request);
+        }
+        
+        public string MakeReservation(CinemaClient.CinemaService.Authentication authentication, CinemaClient.CinemaService.Reservation reservation) {
+            CinemaClient.CinemaService.MakeReservationRequest inValue = new CinemaClient.CinemaService.MakeReservationRequest();
+            inValue.authentication = authentication;
+            inValue.reservation = reservation;
+            CinemaClient.CinemaService.MakeReservationResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).MakeReservation(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.MakeReservationResponse> CinemaClient.CinemaService.ICinemaService.MakeReservationAsync(CinemaClient.CinemaService.MakeReservationRequest request) {
+            return base.Channel.MakeReservationAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<CinemaClient.CinemaService.MakeReservationResponse> MakeReservationAsync(CinemaClient.CinemaService.Authentication authentication, CinemaClient.CinemaService.Reservation reservation) {
+            CinemaClient.CinemaService.MakeReservationRequest inValue = new CinemaClient.CinemaService.MakeReservationRequest();
+            inValue.authentication = authentication;
+            inValue.reservation = reservation;
+            return ((CinemaClient.CinemaService.ICinemaService)(this)).MakeReservationAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CinemaClient.CinemaService.LoginResponse CinemaClient.CinemaService.ICinemaService.Login(CinemaClient.CinemaService.LoginRequest request) {
+            return base.Channel.Login(request);
+        }
+        
+        public void Login(CinemaClient.CinemaService.Authentication authentication) {
+            CinemaClient.CinemaService.LoginRequest inValue = new CinemaClient.CinemaService.LoginRequest();
+            inValue.authentication = authentication;
+            CinemaClient.CinemaService.LoginResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).Login(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.LoginResponse> CinemaClient.CinemaService.ICinemaService.LoginAsync(CinemaClient.CinemaService.LoginRequest request) {
+            return base.Channel.LoginAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<CinemaClient.CinemaService.LoginResponse> LoginAsync(CinemaClient.CinemaService.Authentication authentication) {
+            CinemaClient.CinemaService.LoginRequest inValue = new CinemaClient.CinemaService.LoginRequest();
+            inValue.authentication = authentication;
+            return ((CinemaClient.CinemaService.ICinemaService)(this)).LoginAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CinemaClient.CinemaService.GetShowingsResponse CinemaClient.CinemaService.ICinemaService.GetShowings(CinemaClient.CinemaService.GetShowingsRequest request) {
+            return base.Channel.GetShowings(request);
+        }
+        
+        public CinemaClient.CinemaService.Showing[] GetShowings() {
+            CinemaClient.CinemaService.GetShowingsRequest inValue = new CinemaClient.CinemaService.GetShowingsRequest();
+            CinemaClient.CinemaService.GetShowingsResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetShowings(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetShowingsResponse> CinemaClient.CinemaService.ICinemaService.GetShowingsAsync(CinemaClient.CinemaService.GetShowingsRequest request) {
+            return base.Channel.GetShowingsAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetShowingsResponse> GetShowingsAsync() {
+            CinemaClient.CinemaService.GetShowingsRequest inValue = new CinemaClient.CinemaService.GetShowingsRequest();
+            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetShowingsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CinemaClient.CinemaService.GetReservationResponse CinemaClient.CinemaService.ICinemaService.GetReservation(CinemaClient.CinemaService.GetReservationRequest request) {
+            return base.Channel.GetReservation(request);
+        }
+        
+        public CinemaClient.CinemaService.Reservation GetReservation(CinemaClient.CinemaService.Authentication authentication, int reservationID) {
+            CinemaClient.CinemaService.GetReservationRequest inValue = new CinemaClient.CinemaService.GetReservationRequest();
+            inValue.authentication = authentication;
+            inValue.reservationID = reservationID;
+            CinemaClient.CinemaService.GetReservationResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservation(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationResponse> CinemaClient.CinemaService.ICinemaService.GetReservationAsync(CinemaClient.CinemaService.GetReservationRequest request) {
+            return base.Channel.GetReservationAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<CinemaClient.CinemaService.GetReservationResponse> GetReservationAsync(CinemaClient.CinemaService.Authentication authentication, int reservationID) {
+            CinemaClient.CinemaService.GetReservationRequest inValue = new CinemaClient.CinemaService.GetReservationRequest();
+            inValue.authentication = authentication;
+            inValue.reservationID = reservationID;
+            return ((CinemaClient.CinemaService.ICinemaService)(this)).GetReservationAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CinemaClient.CinemaService.CreateUserResponse CinemaClient.CinemaService.ICinemaService.CreateUser(CinemaClient.CinemaService.CreateUserRequest request) {
+            return base.Channel.CreateUser(request);
+        }
+        
+        public void CreateUser(CinemaClient.CinemaService.Authentication authentication) {
+            CinemaClient.CinemaService.CreateUserRequest inValue = new CinemaClient.CinemaService.CreateUserRequest();
+            inValue.authentication = authentication;
+            CinemaClient.CinemaService.CreateUserResponse retVal = ((CinemaClient.CinemaService.ICinemaService)(this)).CreateUser(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<CinemaClient.CinemaService.CreateUserResponse> CinemaClient.CinemaService.ICinemaService.CreateUserAsync(CinemaClient.CinemaService.CreateUserRequest request) {
+            return base.Channel.CreateUserAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<CinemaClient.CinemaService.CreateUserResponse> CreateUserAsync(CinemaClient.CinemaService.Authentication authentication) {
+            CinemaClient.CinemaService.CreateUserRequest inValue = new CinemaClient.CinemaService.CreateUserRequest();
+            inValue.authentication = authentication;
+            return ((CinemaClient.CinemaService.ICinemaService)(this)).CreateUserAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

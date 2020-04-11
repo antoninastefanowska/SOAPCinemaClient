@@ -1,10 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://service/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="CinemaServiceService" targetNamespace="http://service/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="CinemaServicePortBinding_MTOM_Policy">
+    <ns1:OptimizedMimeSerialization xmlns:ns1="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true">
+    </ns1:OptimizedMimeSerialization>
+  </wsp:Policy>
   <types>
     <xsd:schema>
       <xsd:import schemaLocation="http://192.168.0.105:8080/cinema?xsd=1" namespace="http://service/" />
     </xsd:schema>
   </types>
+  <message name="GetTakenSeats">
+    <part name="parameters" element="tns:GetTakenSeats" />
+  </message>
+  <message name="GetTakenSeatsResponse">
+    <part name="parameters" element="tns:GetTakenSeatsResponse" />
+  </message>
+  <message name="InvalidIdException">
+    <part name="fault" element="tns:InvalidIdException" />
+  </message>
+  <message name="GetShowing">
+    <part name="parameters" element="tns:GetShowing" />
+  </message>
+  <message name="GetShowingResponse">
+    <part name="parameters" element="tns:GetShowingResponse" />
+  </message>
+  <message name="GetReservations">
+    <part name="parameters" element="tns:GetReservations" />
+  </message>
+  <message name="GetReservationsResponse">
+    <part name="parameters" element="tns:GetReservationsResponse" />
+  </message>
+  <message name="AuthenticationException">
+    <part name="fault" element="tns:AuthenticationException" />
+  </message>
+  <message name="GetFilm">
+    <part name="parameters" element="tns:GetFilm" />
+  </message>
+  <message name="GetFilmResponse">
+    <part name="parameters" element="tns:GetFilmResponse" />
+  </message>
+  <message name="MakeReservation">
+    <part name="parameters" element="tns:MakeReservation" />
+  </message>
+  <message name="MakeReservationResponse">
+    <part name="parameters" element="tns:MakeReservationResponse" />
+  </message>
+  <message name="SeatAlreadyTakenException">
+    <part name="fault" element="tns:SeatAlreadyTakenException" />
+  </message>
   <message name="Login">
     <part name="parameters" element="tns:Login" />
   </message>
@@ -17,32 +60,17 @@
   <message name="WrongPasswordException">
     <part name="fault" element="tns:WrongPasswordException" />
   </message>
-  <message name="GetFilm">
-    <part name="parameters" element="tns:GetFilm" />
-  </message>
-  <message name="GetFilmResponse">
-    <part name="parameters" element="tns:GetFilmResponse" />
-  </message>
-  <message name="InvalidIdException">
-    <part name="fault" element="tns:InvalidIdException" />
-  </message>
-  <message name="MakeReservation">
-    <part name="parameters" element="tns:MakeReservation" />
-  </message>
-  <message name="MakeReservationResponse">
-    <part name="parameters" element="tns:MakeReservationResponse" />
-  </message>
-  <message name="SeatAlreadyTakenException">
-    <part name="fault" element="tns:SeatAlreadyTakenException" />
-  </message>
-  <message name="AuthenticationException">
-    <part name="fault" element="tns:AuthenticationException" />
-  </message>
   <message name="GetShowings">
     <part name="parameters" element="tns:GetShowings" />
   </message>
   <message name="GetShowingsResponse">
     <part name="parameters" element="tns:GetShowingsResponse" />
+  </message>
+  <message name="GetReservation">
+    <part name="parameters" element="tns:GetReservation" />
+  </message>
+  <message name="GetReservationResponse">
+    <part name="parameters" element="tns:GetReservationResponse" />
   </message>
   <message name="CreateUser">
     <part name="parameters" element="tns:CreateUser" />
@@ -52,30 +80,6 @@
   </message>
   <message name="UserAlreadyExistsException">
     <part name="fault" element="tns:UserAlreadyExistsException" />
-  </message>
-  <message name="GetReservations">
-    <part name="parameters" element="tns:GetReservations" />
-  </message>
-  <message name="GetReservationsResponse">
-    <part name="parameters" element="tns:GetReservationsResponse" />
-  </message>
-  <message name="GetReservation">
-    <part name="parameters" element="tns:GetReservation" />
-  </message>
-  <message name="GetReservationResponse">
-    <part name="parameters" element="tns:GetReservationResponse" />
-  </message>
-  <message name="GetTakenSeats">
-    <part name="parameters" element="tns:GetTakenSeats" />
-  </message>
-  <message name="GetTakenSeatsResponse">
-    <part name="parameters" element="tns:GetTakenSeatsResponse" />
-  </message>
-  <message name="GetShowing">
-    <part name="parameters" element="tns:GetShowing" />
-  </message>
-  <message name="GetShowingResponse">
-    <part name="parameters" element="tns:GetShowingResponse" />
   </message>
   <message name="UpdateReservation">
     <part name="parameters" element="tns:UpdateReservation" />
@@ -90,11 +94,21 @@
     <part name="parameters" element="tns:CancelReservationResponse" />
   </message>
   <portType name="ICinemaService">
-    <operation name="Login">
-      <input wsam:Action="http://service/ICinemaService/LoginRequest" message="tns:Login" />
-      <output wsam:Action="http://service/ICinemaService/LoginResponse" message="tns:LoginResponse" />
-      <fault wsam:Action="http://service/ICinemaService/Login/Fault/NoSuchUserException" name="NoSuchUserException" message="tns:NoSuchUserException" />
-      <fault wsam:Action="http://service/ICinemaService/Login/Fault/WrongPasswordException" name="WrongPasswordException" message="tns:WrongPasswordException" />
+    <operation name="GetTakenSeats">
+      <input wsam:Action="http://service/ICinemaService/GetTakenSeatsRequest" message="tns:GetTakenSeats" />
+      <output wsam:Action="http://service/ICinemaService/GetTakenSeatsResponse" message="tns:GetTakenSeatsResponse" />
+      <fault wsam:Action="http://service/ICinemaService/GetTakenSeats/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
+    </operation>
+    <operation name="GetShowing">
+      <input wsam:Action="http://service/ICinemaService/GetShowingRequest" message="tns:GetShowing" />
+      <output wsam:Action="http://service/ICinemaService/GetShowingResponse" message="tns:GetShowingResponse" />
+      <fault wsam:Action="http://service/ICinemaService/GetShowing/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
+    </operation>
+    <operation name="GetReservations">
+      <input wsam:Action="http://service/ICinemaService/GetReservationsRequest" message="tns:GetReservations" />
+      <output wsam:Action="http://service/ICinemaService/GetReservationsResponse" message="tns:GetReservationsResponse" />
+      <fault wsam:Action="http://service/ICinemaService/GetReservations/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
+      <fault wsam:Action="http://service/ICinemaService/GetReservations/Fault/AuthenticationException" name="AuthenticationException" message="tns:AuthenticationException" />
     </operation>
     <operation name="GetFilm">
       <input wsam:Action="http://service/ICinemaService/GetFilmRequest" message="tns:GetFilm" />
@@ -108,20 +122,15 @@
       <fault wsam:Action="http://service/ICinemaService/MakeReservation/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
       <fault wsam:Action="http://service/ICinemaService/MakeReservation/Fault/AuthenticationException" name="AuthenticationException" message="tns:AuthenticationException" />
     </operation>
+    <operation name="Login">
+      <input wsam:Action="http://service/ICinemaService/LoginRequest" message="tns:Login" />
+      <output wsam:Action="http://service/ICinemaService/LoginResponse" message="tns:LoginResponse" />
+      <fault wsam:Action="http://service/ICinemaService/Login/Fault/NoSuchUserException" name="NoSuchUserException" message="tns:NoSuchUserException" />
+      <fault wsam:Action="http://service/ICinemaService/Login/Fault/WrongPasswordException" name="WrongPasswordException" message="tns:WrongPasswordException" />
+    </operation>
     <operation name="GetShowings">
       <input wsam:Action="http://service/ICinemaService/GetShowingsRequest" message="tns:GetShowings" />
       <output wsam:Action="http://service/ICinemaService/GetShowingsResponse" message="tns:GetShowingsResponse" />
-    </operation>
-    <operation name="CreateUser">
-      <input wsam:Action="http://service/ICinemaService/CreateUserRequest" message="tns:CreateUser" />
-      <output wsam:Action="http://service/ICinemaService/CreateUserResponse" message="tns:CreateUserResponse" />
-      <fault wsam:Action="http://service/ICinemaService/CreateUser/Fault/UserAlreadyExistsException" name="UserAlreadyExistsException" message="tns:UserAlreadyExistsException" />
-    </operation>
-    <operation name="GetReservations">
-      <input wsam:Action="http://service/ICinemaService/GetReservationsRequest" message="tns:GetReservations" />
-      <output wsam:Action="http://service/ICinemaService/GetReservationsResponse" message="tns:GetReservationsResponse" />
-      <fault wsam:Action="http://service/ICinemaService/GetReservations/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
-      <fault wsam:Action="http://service/ICinemaService/GetReservations/Fault/AuthenticationException" name="AuthenticationException" message="tns:AuthenticationException" />
     </operation>
     <operation name="GetReservation">
       <input wsam:Action="http://service/ICinemaService/GetReservationRequest" message="tns:GetReservation" />
@@ -129,15 +138,10 @@
       <fault wsam:Action="http://service/ICinemaService/GetReservation/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
       <fault wsam:Action="http://service/ICinemaService/GetReservation/Fault/AuthenticationException" name="AuthenticationException" message="tns:AuthenticationException" />
     </operation>
-    <operation name="GetTakenSeats">
-      <input wsam:Action="http://service/ICinemaService/GetTakenSeatsRequest" message="tns:GetTakenSeats" />
-      <output wsam:Action="http://service/ICinemaService/GetTakenSeatsResponse" message="tns:GetTakenSeatsResponse" />
-      <fault wsam:Action="http://service/ICinemaService/GetTakenSeats/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
-    </operation>
-    <operation name="GetShowing">
-      <input wsam:Action="http://service/ICinemaService/GetShowingRequest" message="tns:GetShowing" />
-      <output wsam:Action="http://service/ICinemaService/GetShowingResponse" message="tns:GetShowingResponse" />
-      <fault wsam:Action="http://service/ICinemaService/GetShowing/Fault/InvalidIdException" name="InvalidIdException" message="tns:InvalidIdException" />
+    <operation name="CreateUser">
+      <input wsam:Action="http://service/ICinemaService/CreateUserRequest" message="tns:CreateUser" />
+      <output wsam:Action="http://service/ICinemaService/CreateUserResponse" message="tns:CreateUserResponse" />
+      <fault wsam:Action="http://service/ICinemaService/CreateUser/Fault/UserAlreadyExistsException" name="UserAlreadyExistsException" message="tns:UserAlreadyExistsException" />
     </operation>
     <operation name="UpdateReservation">
       <input wsam:Action="http://service/ICinemaService/UpdateReservationRequest" message="tns:UpdateReservation" />
@@ -154,8 +158,10 @@
     </operation>
   </portType>
   <binding name="CinemaServicePortBinding" type="tns:ICinemaService">
+    <wsp:PolicyReference URI="#CinemaServicePortBinding_MTOM_Policy">
+    </wsp:PolicyReference>
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="Login">
+    <operation name="GetTakenSeats">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -163,11 +169,35 @@
       <output>
         <soap:body use="literal" />
       </output>
-      <fault name="NoSuchUserException">
-        <soap:fault use="literal" name="NoSuchUserException" namespace="" />
+      <fault name="InvalidIdException">
+        <soap:fault use="literal" name="InvalidIdException" namespace="" />
       </fault>
-      <fault name="WrongPasswordException">
-        <soap:fault use="literal" name="WrongPasswordException" namespace="" />
+    </operation>
+    <operation name="GetShowing">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidIdException">
+        <soap:fault use="literal" name="InvalidIdException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="GetReservations">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidIdException">
+        <soap:fault use="literal" name="InvalidIdException" namespace="" />
+      </fault>
+      <fault name="AuthenticationException">
+        <soap:fault use="literal" name="AuthenticationException" namespace="" />
       </fault>
     </operation>
     <operation name="GetFilm">
@@ -200,6 +230,21 @@
         <soap:fault use="literal" name="AuthenticationException" namespace="" />
       </fault>
     </operation>
+    <operation name="Login">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="NoSuchUserException">
+        <soap:fault use="literal" name="NoSuchUserException" namespace="" />
+      </fault>
+      <fault name="WrongPasswordException">
+        <soap:fault use="literal" name="WrongPasswordException" namespace="" />
+      </fault>
+    </operation>
     <operation name="GetShowings">
       <soap:operation soapAction="" />
       <input>
@@ -208,33 +253,6 @@
       <output>
         <soap:body use="literal" />
       </output>
-    </operation>
-    <operation name="CreateUser">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-      <fault name="UserAlreadyExistsException">
-        <soap:fault use="literal" name="UserAlreadyExistsException" namespace="" />
-      </fault>
-    </operation>
-    <operation name="GetReservations">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-      <fault name="InvalidIdException">
-        <soap:fault use="literal" name="InvalidIdException" namespace="" />
-      </fault>
-      <fault name="AuthenticationException">
-        <soap:fault use="literal" name="AuthenticationException" namespace="" />
-      </fault>
     </operation>
     <operation name="GetReservation">
       <soap:operation soapAction="" />
@@ -251,7 +269,7 @@
         <soap:fault use="literal" name="AuthenticationException" namespace="" />
       </fault>
     </operation>
-    <operation name="GetTakenSeats">
+    <operation name="CreateUser">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -259,20 +277,8 @@
       <output>
         <soap:body use="literal" />
       </output>
-      <fault name="InvalidIdException">
-        <soap:fault use="literal" name="InvalidIdException" namespace="" />
-      </fault>
-    </operation>
-    <operation name="GetShowing">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-      <fault name="InvalidIdException">
-        <soap:fault use="literal" name="InvalidIdException" namespace="" />
+      <fault name="UserAlreadyExistsException">
+        <soap:fault use="literal" name="UserAlreadyExistsException" namespace="" />
       </fault>
     </operation>
     <operation name="UpdateReservation">

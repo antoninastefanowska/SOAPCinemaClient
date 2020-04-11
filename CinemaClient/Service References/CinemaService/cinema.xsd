@@ -72,6 +72,7 @@
   </xs:complexType>
   <xs:complexType name="Reservation">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Code" type="xs:string" />
       <xs:element name="ID" type="xs:int" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Seats" type="tns:Seat" />
       <xs:element name="ShowingID" type="xs:int" />
@@ -89,19 +90,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="AuthenticationException">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="message" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="CreateUser">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="CreateUserResponse">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:complexType name="UserAlreadyExistsException">
     <xs:sequence>
       <xs:element minOccurs="0" name="message" type="xs:string" />
     </xs:sequence>
@@ -124,6 +112,19 @@
       <xs:element minOccurs="0" name="FilmTitle" type="xs:string" />
       <xs:element name="ID" type="xs:int" />
       <xs:element name="SeatsRowNumber" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CreateUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authentication" type="tns:Authentication" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CreateUserResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="UserAlreadyExistsException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="GetReservations">
@@ -220,7 +221,7 @@
   </xs:complexType>
   <xs:complexType name="MakeReservationResponse">
     <xs:sequence>
-      <xs:element name="return" type="xs:int" />
+      <xs:element minOccurs="0" name="return" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

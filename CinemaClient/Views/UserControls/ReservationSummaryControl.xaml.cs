@@ -65,8 +65,13 @@ namespace CinemaClient
         private FlowDocument GenerateDocument()
         {
             FlowDocument document = new FlowDocument();
-            Paragraph paragraph = new Paragraph(new Run("Podsumowanie"));
+            Paragraph paragraph = new Paragraph(new Run("Potwierdzenie"));
             paragraph.FontSize = 36;
+            document.Blocks.Add(paragraph);
+
+            paragraph = new Paragraph();
+            paragraph.Inlines.Add(new Bold(new Run("Kod rezerwacji: ")));
+            paragraph.Inlines.Add(ReservationItem.Reservation.Code);
             document.Blocks.Add(paragraph);
 
             paragraph = new Paragraph();

@@ -50,8 +50,11 @@
     <Style x:Key="TextBlockDarkStyle" TargetType="{x:Type TextBlock}">
         <Style.Setters>
             <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextAlignment" Value="Center" />
             <Setter Property="Foreground" Value="#FF6F7C91" />
             <Setter Property="Padding" Value="5" />
+            <Setter Property="TextWrapping" Value="Wrap" />
         </Style.Setters>
     </Style>
     <Style x:Key="TextBlockLightStyle" TargetType="{x:Type TextBlock}">

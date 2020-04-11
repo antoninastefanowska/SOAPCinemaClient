@@ -166,8 +166,8 @@ namespace CinemaClient
             try
             {
                 MakeReservationResponse response = await Service.MakeReservationAsync(Authentication, newReservation);
-                int reservationId = response.@return;
-                newReservation.ID = reservationId;
+                string reservationCode = response.@return;
+                newReservation.Code = reservationCode;
                 ReservationItem.Reservation = newReservation;
                 Utils.ShowInfo(Context, "Rezerwacja została złożona pomyślnie.");
                 Context.ReservationItem = ReservationItem;
@@ -189,6 +189,7 @@ namespace CinemaClient
             {
                 await Service.UpdateReservationAsync(Authentication, ReservationItem.Reservation.ID, newReservation);
                 newReservation.ID = ReservationItem.Reservation.ID;
+                newReservation.Code = ReservationItem.Reservation.Code;
                 ReservationItem.Reservation = newReservation;
                 Utils.ShowInfo(Context, "Rezerwacja została zaktualizowana pomyślnie.");
                 Context.ReservationItem = ReservationItem;
